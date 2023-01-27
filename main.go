@@ -26,11 +26,15 @@ package main //ref: https://swaggo.github.io/swaggo.io/declarative_comments_form
 // @scope.admin Grants read and write access to administrative information
 
 import (
-	"fmt"
 	"log"
 	"net/http"
-	"os"
 )
+
+//Hello from a snippet box
+
+func home(w http.ResponseWriter, r *http.Request) {
+	w.Write([]byte("Hello from a snippet box"))
+}
 
 func main() {
 	//TODO: add swagger
@@ -52,15 +56,24 @@ func main() {
 	//TODO:	Session management: Implement session management to track user sessions and handle authentication and authorization. This can be done using a session management library suchas //gorilla/sessions or context-session.
 	//TODO:	Deployment: Consider a containerization solution such as Docker to deploy your service, this will make it easy to manage and scaling your service.
 	//TODO:	Scaling: Consider scaling the service horizontally by adding more instances of the service behind a load balancer. This can be done using a Kubernetes or other container orchestration platform.
-	port := os.Getenv("PORT")
-	if port == "" {
-		port = "8080"
+
+	// Use the http.NewServeMux() function to initialize a new servemux, then // register the home function as the handler for the "/" URL pattern.
+	mux := http.NewServeMux()
+	mux.HandleFunc("/", home)
+
+	//Use listen and serve to start a new server
+	//The first parameter is the TCP network address to listen on
+	//The second parameter is an interface which expects a handler
+	//The handler interface is satisfied by any value with a ServeHTTP method
+	//ServeHTTP has the signature func(w http.ResponseWriter, r *http.Request)
+	//The http.ListenAndServe() function is a blocking function
+	//It will only return an error if something goes wrong
+	//We use the log.Fatal() function to log the error message and exit the program
+	//If everything goes well, the log.Fatal() function will never be called
+	//The log.Fatal() function calls os.Exit(1) after writing the log message
+
+	err := http.ListenAndServe(":4000", mux)
+	if err != nil {
+		log.Fatal(err)
 	}
-
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintf(w, "Hello, %q", r.URL.Path)
-	})
-
-	log.Printf("Server listening on port %s", port)
-	log.Fatal(http.ListenAndServe(":"+port, nil))
 }
