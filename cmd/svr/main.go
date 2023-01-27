@@ -29,7 +29,7 @@ import (
 	"log"
 	"net/http"
 
-	httpRoutes "github.com/GazmirMazari/real-estate-market-analysis/routes"
+	"github.com/GazmirMazari/real-estate-market-analysis/routes"
 )
 
 func main() {
@@ -53,7 +53,7 @@ func main() {
 	//TODO:	Deployment: Consider a containerization solution such as Docker to deploy your service, this will make it easy to manage and scaling your service.
 	//TODO:	Scaling: Consider scaling the service horizontally by adding more instances of the service behind a load balancer. This can be done using a Kubernetes or other container orchestration platform.
 
-	mux := httpRoutes.
+	mux := routes.InitializetRoutes()
 
 	err := http.ListenAndServe(":4000", mux)
 	if err != nil {
