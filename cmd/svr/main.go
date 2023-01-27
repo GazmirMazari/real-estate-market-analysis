@@ -28,25 +28,9 @@ package main //ref: https://swaggo.github.io/swaggo.io/declarative_comments_form
 import (
 	"log"
 	"net/http"
+
+	httpRoutes "github.com/GazmirMazari/real-estate-market-analysis/routes"
 )
-
-//Hello from a snippet box
-
-func home(w http.ResponseWriter, r *http.Request) {
-	if r.URL.Path != "/" {
-		http.NotFound(w, r)
-		return
-	}
-	w.Write([]byte("Hello from a snippet box"))
-}
-
-func GetListing(w http.ResponseWriter, r *http.Request) {
-	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
-		return
-	}
-	w.Write([]byte("Get a specific listing"))
-}
 
 func main() {
 	//TODO: add swagger
@@ -69,20 +53,7 @@ func main() {
 	//TODO:	Deployment: Consider a containerization solution such as Docker to deploy your service, this will make it easy to manage and scaling your service.
 	//TODO:	Scaling: Consider scaling the service horizontally by adding more instances of the service behind a load balancer. This can be done using a Kubernetes or other container orchestration platform.
 
-	// Use the http.NewServeMux() function to initialize a new servemux, then // register the home function as the handler for the "/" URL pattern.
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", home)
-
-	//Use listen and serve to start a new server
-	//The first parameter is the TCP network address to listen on
-	//The second parameter is an interface which expects a handler
-	//The handler interface is satisfied by any value with a ServeHTTP method
-	//ServeHTTP has the signature func(w http.ResponseWriter, r *http.Request)
-	//The http.ListenAndServe() function is a blocking function
-	//It will only return an error if something goes wrong
-	//We use the log.Fatal() function to log the error message and exit the program
-	//If everything goes well, the log.Fatal() function will never be called
-	//The log.Fatal() function calls os.Exit(1) after writing the log message
+	mux := httpRoutes.
 
 	err := http.ListenAndServe(":4000", mux)
 	if err != nil {
