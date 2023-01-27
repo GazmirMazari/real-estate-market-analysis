@@ -41,5 +41,8 @@ bench:
 profile:
 	go test -run=^a -bench=. -cpuprofile=cpu.out -memprofile=mem.out
 
+swagger:
+	go run github.com/go-swagger/go-swagger/cmd/swagger generate server -f swagger.yml
+
 # Declare these as phony targets
 .PHONY: build run lint clean air docker test bench profile
