@@ -2,18 +2,18 @@ package routes
 
 import (
 	"net/http"
+
+	"github.com/GazmirMazari/real-estate-market-analysis/handler"
 )
 
 type Route struct {
 	Name    string
 	Method  string
 	Pattern string
-	h       *handler
 }
 
-type Routes []Route
-
-func (r Route) ServeHTTP() {
+func InitializetRoutes() *http.ServeMux {
 	mux := http.NewServeMux()
-	mux.HandleFunc("/", r.handler.home)
+	mux.HandleFunc("/", handler.Home)
+	return mux
 }

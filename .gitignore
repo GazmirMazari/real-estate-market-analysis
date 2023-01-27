@@ -1,0 +1,7 @@
+.air.toml
+*.exe
+.env
+
+# Directories
+tmp/
+bin/
