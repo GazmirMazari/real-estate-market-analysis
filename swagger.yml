@@ -1,0 +1,18 @@
+swagger: "2.0"
+info:
+  title: Snippet Box API
+  version: 1.0.0
+host: localhost:8000
+basePath: /
+schemes:
+  - http
+paths:
+  /:
+    post:
+      summary: Home endpoint
+      operationId: home
+      responses:
+        200:
+          description: Successful response
+          schema:
+            type: string
