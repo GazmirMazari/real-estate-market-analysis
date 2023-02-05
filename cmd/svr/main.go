@@ -26,7 +26,7 @@ package main //ref: https://swaggo.github.io/swaggo.io/declarative_comments_form
 // @scope.admin Grants read and write access to administrative information
 
 import (
-	scraper "real_estate_market/api/scraper"
+	scraper "../cmd/api/scrapper"
 )
 
 func main() {

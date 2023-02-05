@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"real_estate_market/routes/handler"
+	"../handler/handler"
 )
 
 type Route struct {
