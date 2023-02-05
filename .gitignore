@@ -1,6 +1,7 @@
 .air.toml
 *.exe
 .env
+.vscode
 
 # Directories
 tmp/
