@@ -26,20 +26,17 @@ package main //ref: https://swaggo.github.io/swaggo.io/declarative_comments_form
 // @scope.admin Grants read and write access to administrative information
 
 import (
-	"log"
-	"net/http"
-
-	"github.com/gocolly/colly"
+	"github.com/GazmirMazari/real-estate-market-analysis/cmd/api/scraper"
 )
 
 func main() {
-	// Start the proxy server
-	go func() {
-		err := http.ListenAndServe("localhost:8080", colly.NewCollector())
-		if err != nil {
-			log.Fatalf("ListenAndServe: %v", err)
-		}
-	}()
+	// // Start the proxy server
+	// go func() {
+	// 	err := http.ListenAndServe("localhost:8080", colly.NewCollector())
+	// 	if err != nil {
+	// 		log.Fatalf("ListenAndServe: %v", err)
+	// 	}
+	// }()
 
 	scraper.ScrapeRedfinAPI()
 }
