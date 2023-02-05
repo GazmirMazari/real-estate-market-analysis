@@ -1,25 +1,30 @@
 package services
 
+import (
+	"github.com/gocolly/colly"
+)
+
 type pageInfo struct {
 	StatusCode int
 	Links      map[string]int
+	URL        string
 }
 
-// Path: cmd\internals\services\colly_scrapper.go
+func (p *pageInfo) scrappeZillow(url string, data chan pageInfo) {
+	c := colly.NewCollector(
+		colly.AllowedDomains("www.zillow.com"),
+	)
 
-func (p *pageInfo) GetStatusCode() int {
-	return p.StatusCode
-}
+	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+		link := e.Attr("href")
+		p.Links[link]++
+	})
 
-func (p *pageInfo) SetStatusCode(statusCode int) {
+	c.OnResponse(func(r *colly.Response) {
+		p.StatusCode = r.StatusCode
+		p.URL = url
+	})
 
-	p.StatusCode = statusCode
-}
-
-func (p *pageInfo) GetLinks() map[string]int {
-	return p.Links
-}
-
-func (p *pageInfo) SetLinks(links map[string]int) {
-	p.Links = links
+	c.Visit(url)
+	data <- *p
 }

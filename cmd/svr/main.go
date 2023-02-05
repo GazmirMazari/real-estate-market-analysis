@@ -29,15 +29,17 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/GazmirMazari/real-estate-market-analysis/routes"
+	"github.com/gocolly/colly"
 )
 
 func main() {
+	// Start the proxy server
+	go func() {
+		err := http.ListenAndServe("localhost:8080", colly.NewCollector())
+		if err != nil {
+			log.Fatalf("ListenAndServe: %v", err)
+		}
+	}()
 
-	mux := routes.InitializetRoutes()
-
-	err := http.ListenAndServe(":4000", mux)
-	if err != nil {
-		log.Fatal(err)
-	}
+	scraper.ScrapeRedfinAPI()
 }
